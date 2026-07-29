@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         #if not MainWindow.objectName():
         #    MainWindow.setObjectName(u"MainWindow")
-        MainWindow.setWindowFlags(Qt.FramelessWindowHint)
+        #MainWindow.setWindowFlags(Qt.FramelessWindowHint)
         #MainWindow.resize(400, 400)
         MainWindow.setFixedSize(264, 285)
         #MainWindow.setMaximumSize(QSize(400, 16777215))

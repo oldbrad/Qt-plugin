@@ -213,15 +213,6 @@ class PyAnalogClock(QWidget):
         self.handChanged.emit(False)
         self.update()
 
-     # Qt designer property.
-     secondHand = Property(bool, getHand, setHand, resetHand)
+    # Qt designer property.
+    secondHand = Property(bool, getHand, setHand, resetHand)
 
-
-if __name__ == "__main__":
-
-    import sys
-
-    app = QApplication(sys.argv)
-    clock = PyAnalogClock()
-    clock.show()
-    sys.exit(app.exec())

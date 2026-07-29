@@ -1,4 +1,0 @@
-Add plugins to sesigner
- source env/bin/activate
- export PYSIDE_DESIGNER_PLUGINS=/home/brad/work/qt/plugins
- pyside6-designer

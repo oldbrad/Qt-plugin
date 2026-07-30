@@ -1,8 +1,11 @@
 # Qt-plugins
-An  example of  PySide6 plugin for Qt dsigner.
-The necessary source files are in the plugins directory.
+An example of PySide6 plugin for Qt dsigner.
 
-Required PySide6 and designer version 6.11 This will not work with PyQt6 or designer v5.
+The necessary Python 3 source files are in the plugins directory.
+
+PySide6 and designer version 6.11 are Required.
+
+This will not work with PyQt6 or designer v5.
  
 ## Add plugins to designer
 

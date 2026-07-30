@@ -6,7 +6,7 @@ PySide6 and designer version 6.11 are Required.
 
 This will not work with PyQt6 or designer v5.
 
-WORK IN PROGRESS
+WORK IN PROGRESS update 30 July 28
  
 ## Add plugins to designer
 

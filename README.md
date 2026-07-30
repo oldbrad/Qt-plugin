@@ -2,10 +2,11 @@
 An example of PySide6 plugin for Qt dsigner.
 
 The necessary Python 3 source files are in the plugins directory.
-
 PySide6 and designer version 6.11 are Required.
 
 This will not work with PyQt6 or designer v5.
+
+WORK IN PROGRESS
  
 ## Add plugins to designer
 
@@ -20,5 +21,5 @@ It is convenient to create a ptyhon vertual environment and if necessary pip ins
  
  Setting the environment variable PYSIDE_DESIGNER_PLUGINS correctly is crucal.
 
- You should no see Custom widgets with the PyAnalogClock item. 
+ You should no see Custom widgets with the PyAnalogClock item.
  

@@ -17,9 +17,9 @@ It is convenient to create a ptyhon vertual environment and if necessary pip ins
  
  Execute the next in a bash shell
 
-   $ python3 -m venv env
-   $ source env/bin/activate
-   (env)$ export PYSIDE_DESIGNER_PLUGINS=/home/brad/work/qt/plugins
+   $ python3 -m venv env  
+   $ source env/bin/activate  
+   (env)$ export PYSIDE_DESIGNER_PLUGINS=/home/brad/work/qt/plugins  
    (env)$ pyside6-designer
  
  Setting the environment variable PYSIDE_DESIGNER_PLUGINS correctly is crucal.

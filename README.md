@@ -24,5 +24,5 @@ It is convenient to create a ptyhon vertual environment and if necessary pip ins
  
  Setting the environment variable PYSIDE_DESIGNER_PLUGINS correctly is crucal.
 
- You should no see Custom widgets with the PyAnalogClock item.
+ You should then see Custom widgets with the PyAnalogClock item.
  

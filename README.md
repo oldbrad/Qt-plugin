@@ -1,6 +1,6 @@
 # Qt-plugins
 
- This archive provides examples of a 'plugins' for Qt designer. The provided examples are a modified version of the original PyAnalogClock.py example distributed with PyQt5 and unmodified tic-tac-toe.py
+ This archive provides examples of a python 'plugins' for Qt designer. The provided examples are a modified version of the original PyAnalogClock.py example distributed with PyQt5 and unmodified tic-tac-toe.py
 
  Inspired by MadQt MadQtPluginCreator, which does not work under Linux. Creating plugins is completely obscure, but relativly simple once seen.
  
@@ -22,7 +22,7 @@
 Configure the environment variable.
  $ export PYSIDE_DESIGNER_PLUGINS=Qt-plugin/plugins
 
-Now run Qt Designer using pyside6-designer, not the package manager version.
+Now run Qt Designer using pyside6-designer, not your package manager version.
 
 In my case Designer is in the vertual environment in which I installed PySidey6
 (env):~$ /home/brad/env/bin/pyside6-designer

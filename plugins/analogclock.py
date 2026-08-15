@@ -39,10 +39,9 @@
 #############################################################################
 
 
-from PySide6.QtCore import (Property, Signal, Slot, QPoint, QRect, QSize,
-        Qt, QTime, QTimer)
+from PySide6.QtCore import (Property, Signal, Slot, QPoint, QRect, QSize, QTime, QTimer, Qt)
 from PySide6.QtGui import QBrush, QColor, QPainter, QPen, QPolygon
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QWidget
 
 
 class PyAnalogClock(QWidget):
@@ -51,6 +50,7 @@ class PyAnalogClock(QWidget):
     Provides an analog clock custom widget with signals, slots and properties.
     The implementation is based on the Analog Clock example provided with both
     Qt and PyQt.
+    This version extenfs the original with a timeZoneOffset and a second hand .
     """
 
     # Emitted when the clock's time changes.
@@ -64,7 +64,8 @@ class PyAnalogClock(QWidget):
 
         super().__init__(parent)
 
-        self.timeZoneOffset = 0.0
+        self.timeZoneOffset = 0
+        self._drawHand = True
 
         timer = QTimer(self)
         timer.timeout.connect(self.update)
@@ -91,22 +92,25 @@ class PyAnalogClock(QWidget):
             QPoint(0, -90)
         ])
 
-
         self.hourColor = QColor(255, 0, 0, 255)
         self.minuteColor = QColor(0, 127, 127, 255)
         self.secondColor = QColor(0, 255, 0, 255)
         self.black = QColor(0, 0, 0, 255)
 
-        self.handChanged.emit(False)
+    @property 
+    def drawHand(self):
+        return(self._drawHand)
+
+    @drawHand.setter
+    def drawHand(self, value):
+        self._drawHand = value
 
     def paintEvent(self, event):
 
-        if not hasattr(self, "handState"):
-           self.handState = False
-
         side = min(self.width(), self.height())
         time = QTime.currentTime()
-        time = time.addSecs(self.timeZoneOffset * 3600)
+        #time = time.addSecs(self.timeZoneOffset * 3600)
+        time = time.addSecs(self.timeZoneOffset * 60)
 
         painter = QPainter()
         painter.begin(self)
@@ -132,11 +136,12 @@ class PyAnalogClock(QWidget):
         painter.setBrush(QBrush(self.minuteColor))
 
         painter.save()
-        painter.rotate(6.0 * (time.minute() + time.second() / 60.0))
+        painter.rotate(6.0 * (time.minute() + time.second() / 60))
         painter.drawConvexPolygon(self.minuteHand)
         painter.restore()
 
-        if self.handState:
+        #print('hand', self._drawHand)
+        if self._drawHand:
            painter.save()
            painter.setBrush(self.secondColor)
            painter.rotate(6.0 * time.second())
@@ -178,41 +183,43 @@ class PyAnalogClock(QWidget):
 
     @Slot(int)
     def setTimeZone(self, value):
+        #print('zone')
         self.timeZoneOffset = value
-        #self.timeZoneChanged.emit(value)
         self.update()
 
     # Qt's property system supports properties that can be reset to their
     # original values. This method enables the timeZone property to be reset.
     def resetTimeZone(self):
-        self.timeZoneOffset = 0.0
+        self.timeZoneOffset = 0
         self.timeZoneChanged.emit(0)
         self.update()
+
+    def delIt(self):
+        pass
 
     # Qt-style properties are defined differently to Python's properties.
     # To declare a property, we call Property() to specify the type and,
     # in this case, getter, setter and resetter methods.
-    timeZone = Property(int, getTimeZone, setTimeZone, resetTimeZone)
+    offset_minutes = Property(int, getTimeZone, setTimeZone, resetTimeZone)
 
     def getHand(self):
         #return False
-        if hasattr(self,'handState'):
-           return self.handState
-        else:
-           return False
+        #if hasattr(self,'_drawHand'):
+        return self._drawHand
+        #else:
+        #   return False
 
     @Slot(bool)
     def setHand(self, value):
-        print('slot', value)
-        #self.handChanged.emit(value)
-        self.handState = value
+        #print('slot', value)
+        self._drawHand = value
         self.update()
 
     def resetHand(self):
-        self.handState = False
+        self._drawHand = False
         self.handChanged.emit(False)
         self.update()
 
     # Qt designer property.
-    secondHand = Property(bool, getHand, setHand, resetHand)
+    second_hand = Property(bool, getHand, setHand, resetHand)
 

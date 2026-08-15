@@ -18,79 +18,59 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform, QDoubleValidator, QKeyEvent)
 
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QMainWindow, QTimeEdit,
-    QSizePolicy, QStatusBar, QWidget, QFrame, QHBoxLayout, QSpacerItem)
+    QSizePolicy, QStatusBar, QWidget, QFrame, QHBoxLayout, QVBoxLayout, QSpacerItem, QCheckBox)
 
-from analogclock import PyAnalogClock
+#import sys
+#sys.path.insert(0, "/home/brad/git/Qt-plugin/plugins")
+
+from plugins.analogclock import PyAnalogClock
 
 import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        #if not MainWindow.objectName():
-        #    MainWindow.setObjectName(u"MainWindow")
-        #MainWindow.setWindowFlags(Qt.FramelessWindowHint)
-        #MainWindow.resize(400, 400)
-        MainWindow.setFixedSize(264, 285)
-        #MainWindow.setMaximumSize(QSize(400, 16777215))
-        MainWindow.setWindowTitle(u"Qt Clock")
-        self.centralwidget = QWidget(MainWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.frame = QFrame(self.centralwidget)
-        self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(2, 2, 260, 270))
-        self.frame.setStyleSheet(u"QFrame, QLabel, QToolTip {\n"
-"    border: 1px solid transparent;\n"
-"    border-radius: 15px;\n"
-"}")
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.PyanalogClock = PyAnalogClock(self.frame)
-        self.PyanalogClock.setObjectName(u"PyanalogClock")
-        self.PyanalogClock.setGeometry(QRect(5, 5, 250, 250))
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.PyanalogClock.sizePolicy().hasHeightForWidth())
-        self.PyanalogClock.setSizePolicy(sizePolicy)
-        self.PyanalogClock.setMinimumSize(QSize(0, 0))
-        self.PyanalogClock.setMaximumSize(QSize(250, 250))
-        self.PyanalogClock.setStyleSheet(u"")
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(0, 254, 235, 24))
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(283, 301)
+        #MainWindow.setWindowTitle('Analog Clock')
+        self.centralwidget = QWidget(parent=MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.analogClock = PyAnalogClock(parent=self.centralwidget)
+        self.analogClock.setMinimumSize(QSize(250, 250))
+        self.analogClock.setObjectName("analogClock")
+        self.verticalLayout.addWidget(self.analogClock)
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
 
-        self.horizontalLayout = QHBoxLayout(self.widget)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 30, 0)
-        self.horizontalSpacer = QSpacerItem(0, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer = QSpacerItem(0, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.label = QLabel(self.widget)
-        self.label.setObjectName(u"label")
-        self.label.setFrameShape(QFrame.Shape.NoFrame)
-        self.label.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.label.setIndent(-3)
-
+        self.label = QLabel(parent=self.centralwidget)
+        self.label.setMaximumSize(QSize(70, 20))
+        self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
-
-
-        self.timeEdit = QTimeEdit(self.widget)
-        self.timeEdit.setFixedWidth(60)
-
+        self.timeEdit = QTimeEdit(parent=self.centralwidget)
+        self.timeEdit.setMaximumSize(QSize(55, 20))
+        self.timeEdit.setObjectName("timeEdit")
         self.horizontalLayout.addWidget(self.timeEdit)
+        self.checkBox = QCheckBox(parent=self.centralwidget)
+        self.checkBox.setChecked(True)
+        self.checkBox.setObjectName("checkBox")
+        self.horizontalLayout.addWidget(self.checkBox)
 
+        self.horizontalSpacer = QSpacerItem(0, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalLayout.addItem(self.horizontalSpacer)
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
         MainWindow.setCentralWidget(self.centralwidget)
-        #self.statusbar = QStatusBar(MainWindow)
-        #self.statusbar.setObjectName(u"statusbar")
-        #MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-
         self.timeEdit.userTimeChanged.connect(self.setOffset)
-
+        self.checkBox.checkStateChanged.connect(self.checkStateChanged)
         QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
+
 
     def keyPressEvent(self, event):
         print('keyPress')
@@ -98,6 +78,7 @@ class Ui_MainWindow(object):
             key_text = event.text()
 
     def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", "Clock Test"))
 #if QT_CONFIG(tooltip)
         #self.PyanalogClock.setToolTip(QCoreApplication.translate("MainWindow", u"The current time", None))
 #endif // QT_CONFIG(tooltip)
@@ -106,13 +87,19 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(whatsthis)
         self.label.setText(QCoreApplication.translate("MainWindow", u"Zone offset:", None))
         #self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"0.000", None))
+        self.checkBox.setText(QCoreApplication.translate("MainWindow", u"Seconds", None))
         pass
     # retranslateUi
 
     def setOffset(self, time=None):
-        offset = time.hour()+time.minute()/60.0
-        self.PyanalogClock.timeZoneOffset = offset
-        self.PyanalogClock.update()
+        #print('set zone')
+        offset = time.hour()*60+time.minute()
+        self.analogClock.timeZoneOffset = offset
+        self.analogClock.update()
+
+    def checkStateChanged(self, state=None):
+        self.analogClock.drawHand = self.checkBox.isChecked()
+        self.analogClock.update()
 
 class Main(QMainWindow):
     def __init__(self):
@@ -134,7 +121,6 @@ if __name__ == "__main__":
     import sys
 
     app =  QApplication(sys.argv)
-    #main = QMainWindow()
     main = Main()
 
     ui = Ui_MainWindow()

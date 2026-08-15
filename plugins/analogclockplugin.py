@@ -24,10 +24,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
+import os
+plugins = os.environ['PYSIDE_DESIGNER_PLUGINS']
+
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 
 from analogclock import PyAnalogClock
+
+DOM_XML = """
+<widget class="PyAnalogClock" name="PyAnalogClock">
+    <property name="toolTip">
+        <string>The current time</string>
+    </property>
+    <property name="whatsThis">
+        <string>Display the time.</string>
+    </property>
+</widget>
+"""
 
 class AnalogClockPlugin(QDesignerCustomWidgetInterface):
     """AnalogClockPlugin(QPyDesignerCustomWidgetPlugin)
@@ -61,6 +75,9 @@ class AnalogClockPlugin(QDesignerCustomWidgetInterface):
     # This factory method creates new instances of our custom widget with the
     # appropriate parent.
     def createWidget(self, parent):
+        #clock = PyAnalogClock(parent)
+        #print('zone', clock.zone)
+        #print('tip', clock.zone.setToolTip)
         return PyAnalogClock(parent)
 
     # This method returns the name of the custom widget class that is provided
@@ -76,7 +93,8 @@ class AnalogClockPlugin(QDesignerCustomWidgetInterface):
     # Returns the icon used to represent the custom widget in Qt Designer's
     # widget box.
     def icon(self):
-        return QIcon(_logo_pixmap)
+        return QPixmap(plugins+'/images/clock.png')
+
 
     # Returns a short description of the custom widget for use in a tool tip.
     def toolTip(self):
@@ -98,98 +116,10 @@ class AnalogClockPlugin(QDesignerCustomWidgetInterface):
     # default values for its properties. Each custom widget created by this
     # plugin will be configured using this description.
     def domXml(self):
-        return '<widget class="PyAnalogClock" name="PyanalogClock">\n' \
-               ' <property name="toolTip">\n' \
-               '  <string>The current time</string>\n' \
-               ' </property>\n' \
-               ' <property name="whatsThis">\n' \
-               '  <string>The analog clock widget displays the current ' \
-               'time.</string>\n' \
-               ' </property>\n' \
-               '</widget>\n'
+        return DOM_XML
 
     # Returns the module containing the custom widget class. It may include
     # a module path.
     def includeFile(self):
         return "analogclock"
 
-
-# Define the image used for the icon.
-_logo_16x16_xpm = [
-    "16 16 58 1",
-    "L c #2d2d2d",
-    "N c #4f4f4f",
-    "K c #636363",
-    "J c #666666",
-    "I c #696969",
-    "D c #727272",
-    "F c #737373",
-    "O c #757575",
-    "G c #7f7f7f",
-    "o c #878787",
-    "t c #888888",
-    "Y c #898989",
-    "c c #8a8a8a",
-    "d c #8b8b8b",
-    "H c #8d8d8d",
-    "Q c #8f8f8f",
-    "b c #909090",
-    "M c #959595",
-    "g c #979797",
-    "n c #989898",
-    "x c #999999",
-    "0 c #9a9a9a",
-    "X c #9b9b9b",
-    "a c #9d9d9d",
-    "E c #9e9e9e",
-    "1 c #9f9f9f",
-    "T c #a0a0a0",
-    "v c #a1a1a1",
-    "r c #a2a2a2",
-    "B c #a6a6a6",
-    "R c #a7a7a7",
-    "3 c #a8a8a8",
-    "z c #aaaaaa",
-    "A c #ababab",
-    "m c #acacac",
-    "h c #adadad",
-    "u c #b1b1b1",
-    "q c #b2b2b2",
-    "V c #bfbfbf",
-    "W c #c6c6c6",
-    "w c #c7c7c7",
-    "s c #c8c8c8",
-    "p c #c9c9c9",
-    "k c #cdcdcd",
-    "l c #cfcfcf",
-    "2 c #d3d3d3",
-    "S c #d4d4d4",
-    "C c #d5d5d5",
-    "y c #d8d8d8",
-    "# c #d9d9d9",
-    "e c #dadada",
-    "i c #dbdbdb",
-    "P c #dcdcdc",
-    "U c #dfdfdf",
-    "j c #e1e1e1",
-    "f c #fbfbfb",
-    "Z c #fcfcfc",
-    ". c #ffffff",
-    "....#abcdbae....",
-    "..fghijkljimnf..",
-    ".fopjjjqrjjjstf.",
-    ".gsjjjjuvjjjjwx.",
-    "yvjjjjjzbjjjjjAi",
-    "BCjjjjjaDjjjjjiE",
-    "bjjjjjjEFjjjjjjG",
-    "HjjjjjjIJjjjjjjc",
-    "HjjjjjjnKLtjjjjc",
-    "bjjjjjjj#MNOPjjQ",
-    "RSjjjjjjjj#mdPiE",
-    "#TjjjjjjjjjjUjzP",
-    ".nVjjjjjjjjjjWX.",
-    ".fEVjjjjjjjjWYZ.",
-    "..f012jjjj2EXZ..",
-    "....i3QccQ3P...."]
-
-_logo_pixmap = QPixmap(_logo_16x16_xpm)

@@ -20,19 +20,19 @@
  
  The installation should be done from pypi.org into a python virtual environment using your prefered method. I use pip because thats what I learned first.
  
-  brad@dell:~ $  mkdir test
-  brad@dell:~ $ python3 -m venv test
-  brad@dell:~ $ source test/bin/activate
-  (test)brad@dell:~ $ pip install PySide6
-  (test)brad@dell:~ $ which pyside6-designer
+  brad@dell:~ $  mkdir test  
+  brad@dell:~ $ python3 -m venv test  
+  brad@dell:~ $ source test/bin/activate  
+  (test)brad@dell:~ $ pip install PySide6  
+  (test)brad@dell:~ $ which pyside6-designer  
   /home/brad/test/bin/pyside6-designer
   
 ## Configure and Run Designer
 
- Configure the environment variable.
+ Configure the environment variable.  
  (test)brad@dell:~ $ export PYSIDE_DESIGNER_PLUGINS=Qt-plugin/plugins
 
- Now run Qt Designer using pyside6-designer, not your package manager version.
+ Now run Qt Designer using pyside6-designer, not your package manager version.  
  (test)brad@dell:~ $ pyside6-designer
 
 You should then see Custom Widgets with the PyAnalogClock and tic-tac-tow  items in designers left side Widget Box

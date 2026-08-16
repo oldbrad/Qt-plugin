@@ -12,22 +12,30 @@
  
 ## Prerequisites
 
- PySide6
- Qt Designer version 6.11
- 
+ Python 3.12 and pip or uv
+  
  You must set the environment variable PYSIDE_DESIGNER_PLUGINS to point to the downloaded plugins directory.
  
+ ## Inatall PySide6 and pyside6-designer
+ 
+ The installation should be done from pypi.org into a python virtual environment using your prefered method. I use pip because thats what I learned first.
+ 
+  brad@dell:~ $  mkdir test
+  brad@dell:~ $ python3 -m venv test
+  brad@dell:~ $ source test/bin/activate
+  (test)brad@dell:~ $ pip install PySide6
+  (test)brad@dell:~ $ which pyside6-designer
+  /home/brad/test/bin/pyside6-designer
+  
 ## Configure and Run Designer
 
-Configure the environment variable.
- $ export PYSIDE_DESIGNER_PLUGINS=Qt-plugin/plugins
+ Configure the environment variable.
+ (test)brad@dell:~ $ export PYSIDE_DESIGNER_PLUGINS=Qt-plugin/plugins
 
-Now run Qt Designer using pyside6-designer, not your package manager version.
+ Now run Qt Designer using pyside6-designer, not your package manager version.
+ (test)brad@dell:~ $ pyside6-designer
 
-In my case Designer is in the vertual environment in which I installed PySidey6
-(env):~$ /home/brad/env/bin/pyside6-designer
-
-You should then see Custom widgets with the PyAnalogClock and tic-tac-tow  items in designers left Widget Box
+You should then see Custom Widgets with the PyAnalogClock and tic-tac-tow  items in designers left side Widget Box
 
 Also Help > About Plugins should also display the plugins.
  
